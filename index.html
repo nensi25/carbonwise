@@ -1,21 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>CarbonWise Rewards - Dashboard</title>
-    <meta name="description" content="CarbonWise Rewards - Track your green actions, earn points, and redeem exciting rewards from top sustainable brands.">
+    <meta name="description" content="CarbonWise Rewards - Track your green actions, earn points, and redeem exciting rewards from top sustainable brands."/>
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Custom CSS -->
-  <link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="layout.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="css/layout.css"/>
+    
+    <style>
+        .eco-level-card,
+        .achievement-card {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            margin-top: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        #eco-level {
+            color: #16a34a;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        #achievement-list p {
+            margin: 8px 0;
+            font-size: 0.95rem;
+            color: var(--gray-700);
+        }
+    </style>
 </head>
 <body>
-    <!-- Authentication Page View -->
     <div id="page-auth" class="auth-wrapper" style="display: flex;">
         <div class="auth-card animate-fade-in">
             <div class="auth-header">
@@ -28,1084 +47,507 @@
                 <button class="auth-tab-btn active" id="auth-tab-signin">Sign In</button>
                 <button class="auth-tab-btn" id="auth-tab-signup">Register</button>
             </div>
-            
-            <!-- Login Form -->
+
             <form id="auth-login-form" class="auth-form active">
-                <div class="input-group">
+                <div class="form-group">
                     <label for="login-email">Email Address</label>
-                    <input type="email" id="login-email" required placeholder="e.g. dev@carbonwise.com">
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" id="login-email" placeholder="e.g. ananya@carbonwise.com" required/>
+                    </div>
                 </div>
-                <div class="input-group">
+                <div class="form-group">
                     <label for="login-password">Password</label>
-                    <input type="password" id="login-password" required placeholder="e.g. developer">
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="login-password" placeholder="••••••••" required/>
+                    </div>
                 </div>
-                <div class="auth-error" id="login-error-msg" style="display: none; color: var(--red-500); font-size: 0.8rem; font-weight: 600; margin-top:-8px; margin-bottom:12px;"></div>
-                <button type="submit" class="action-submit-btn">Login Session</button>
+                <div id="login-error-msg" class="auth-error-msg" style="display: none;"></div>
+                <button type="submit" class="auth-submit-btn">Let's Go <i class="fa-solid fa-arrow-right"></i></button>
+                <div class="auth-demo-hint">
+                    <strong>Demo User:</strong> ananya@carbonwise.com | <strong>Pass:</strong> password
+                </div>
             </form>
-            
-            <!-- Registration Form -->
+
             <form id="auth-register-form" class="auth-form">
-                <div class="input-group">
+                <div class="form-group">
                     <label for="register-name">Full Name</label>
-                    <input type="text" id="register-name" required placeholder="e.g. Ananya Sen">
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" id="register-name" placeholder="e.g. Ananya Sharma" required/>
+                    </div>
                 </div>
-                <div class="input-group">
+                <div class="form-group">
                     <label for="register-email">Email Address</label>
-                    <input type="email" id="register-email" required placeholder="e.g. user@test.com">
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" id="register-email" placeholder="e.g. mail@domain.com" required/>
+                    </div>
                 </div>
-                <div class="input-group">
-                    <label for="register-password">Password</label>
-                    <input type="password" id="register-password" required placeholder="Min 6 characters">
+                <div class="form-group">
+                    <label for="register-password">Password (min 6 chars)</label>
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="register-password" placeholder="Create strong password" required/>
+                    </div>
                 </div>
-                <div class="input-group">
-                    <label for="register-goal">Monthly Carbon Target (kg CO₂)</label>
-                    <input type="number" id="register-goal" value="50" min="10" max="500">
+                <div class="form-group">
+                    <label for="register-goal">Monthly Carbon Target Reduction (kg CO₂)</label>
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-bullseye"></i>
+                        <input type="number" id="register-goal" value="50" min="10" max="500" required/>
+                    </div>
                 </div>
-                <div class="auth-error" id="register-error-msg" style="display: none; color: var(--red-500); font-size: 0.8rem; font-weight: 600; margin-top:-8px; margin-bottom:12px;"></div>
-                <button type="submit" class="action-submit-btn">Create Account</button>
+                <div id="register-error-msg" class="auth-error-msg" style="display: none;"></div>
+                <button type="submit" class="auth-submit-btn green-btn">Create Free Account <i class="fa-solid fa-user-plus"></i></button>
             </form>
-            
-            <!-- Info footnote -->
-            <div class="auth-footnote">
-                <p>Use developer account: <br><strong>dev@carbonwise.com</strong> / <strong>developer</strong></p>
-            </div>
         </div>
     </div>
 
-    <div id="app-container" style="display: none;">
-        <!-- Sidebar -->
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <div class="sidebar-logo">
-                    <div class="logo-icon">
-                        <i class="fa-solid fa-leaf"></i>
-                    </div>
-                    <div class="logo-text">
-                        <h2>CarbonWise</h2>
-                        <span>REWARDS</span>
-                    </div>
+    <div id="app-container" class="layout-wrapper" style="display: none;">
+        
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <div class="logo-circle"><i class="fa-solid fa-leaf"></i></div>
+                <div class="logo-text">
+                    <h1>CarbonWise</h1>
+                    <span>REWARDS SYSTEM</span>
                 </div>
             </div>
 
-            <nav class="sidebar-nav">
-                <ul class="nav-menu" id="nav-menu">
+            <div class="user-profile">
+                <img src="assets/avatar.svg" alt="Profile" class="profile-avatar"/>
+                <div class="user-meta">
+                    <span class="user-name">Loading...</span>
+                    <span class="user-role">Green Explorer</span>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <ul>
                     <li class="nav-item active" data-page="dashboard">
-                        <i class="fa-solid fa-house"></i> Dashboard
+                        <i class="fa-solid fa-chart-pie"></i>
+                        <span>Dashboard</span>
                     </li>
                     <li class="nav-item" data-page="track">
-                        <i class="fa-solid fa-hand-holding-heart"></i> Track & Earn
+                        <i class="fa-solid fa-square-plus"></i>
+                        <span>Track & Earn</span>
                     </li>
                     <li class="nav-item" data-page="insights">
-                        <i class="fa-solid fa-brain"></i> AI Insights
+                        <i class="fa-solid fa-seedling"></i>
+                        <span>AI Insights</span>
                     </li>
                     <li class="nav-item" data-page="challenges">
-                        <i class="fa-solid fa-flag-checkered"></i> Challenges
+                        <i class="fa-solid fa-trophy"></i>
+                        <span>Eco Challenges</span>
                     </li>
                     <li class="nav-item" data-page="marketplace">
-                        <i class="fa-solid fa-store"></i> Marketplace
+                        <i class="fa-solid fa-store"></i>
+                        <span>Green Store</span>
                     </li>
                     <li class="nav-item" data-page="rewards">
-                        <i class="fa-solid fa-gift"></i> Rewards
+                        <i class="fa-solid fa-tags"></i>
+                        <span>Brand Rewards</span>
                     </li>
                     <li class="nav-item" data-page="community">
-                        <i class="fa-solid fa-users"></i> Community
+                        <i class="fa-solid fa-users"></i>
+                        <span>Eco Circle</span>
                     </li>
                     <li class="nav-item" data-page="impact">
-                        <i class="fa-solid fa-chart-line"></i> Impact Report
+                        <i class="fa-solid fa-earth-americas"></i>
+                        <span>Global Impact</span>
                     </li>
                     <li class="nav-item" data-page="settings">
-                        <i class="fa-solid fa-gear"></i> Settings
+                        <i class="fa-solid fa-sliders"></i>
+                        <span>My Account</span>
                     </li>
-                    <li class="nav-item" data-page="developer" id="nav-developer" style="display: none;">
-                        <i class="fa-solid fa-code"></i> Developer Panel
+                    <li class="nav-item" id="nav-developer" data-page="developer" style="display: none;">
+                        <i class="fa-solid fa-code"></i>
+                        <span>Developer</span>
                     </li>
-                    <li class="nav-item logout-nav-item" data-page="logout" id="nav-logout" style="margin-top: 15px; border-top: 1px solid var(--gray-100); padding-top: 15px;">
-                        <i class="fa-solid fa-right-from-bracket text-red"></i> <span class="text-red">Logout</span>
+                    <li class="nav-item logout-item" data-page="logout">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span>Logout Session</span>
                     </li>
                 </ul>
             </nav>
-
-            <div class="sidebar-footer">
-                <div class="earth-mascot-card">
-                    <img src="assets/earth-mascot.svg" alt="Earth Mascot" class="mascot-img" id="earth-mascot">
-                    <p>Every action makes<br>Earth smile 🌍</p>
-                    <button class="impact-btn" id="see-impact-btn">
-                        <i class="fa-solid fa-eye"></i> See My Impact
-                    </button>
-                </div>
-            </div>
         </aside>
 
-        <!-- Main Content -->
         <main class="main-content">
-            <!-- Top Header -->
-            <header class="top-header">
+            
+            <header class="app-header">
                 <div class="header-left">
-                    <h1 class="header-greeting">
-                        Good Morning, Ananya! <span class="wave">👋</span>
-                    </h1>
-                    <p class="header-subtitle">Let's make today greener than yesterday.</p>
+                    <h2 class="header-greeting">Good Morning!</h2>
+                    <p class="header-subtext">Your efforts today directly safe-keep the planetary environmental health index.</p>
                 </div>
                 <div class="header-right">
-                    <div class="eco-streak" id="eco-streak">
-                        <i class="fa-solid fa-fire-flame-curved"></i>
-                        <div class="streak-info">
-                            <span class="streak-label">Eco Streak</span>
-                            <span class="streak-value">12 Days <i class="fa-solid fa-chevron-right" style="font-size:0.6rem;"></i></span>
-                        </div>
+                    <div class="header-wallet-badge" data-go-to="marketplace">
+                        <i class="fa-solid fa-coins"></i>
+                        <span id="green-points-value">0</span> <small>Pts</small>
                     </div>
-                    <button class="header-icon-btn" id="notification-btn">
+                    <div class="header-notif-bell">
                         <i class="fa-solid fa-bell"></i>
-                        <span class="badge">3</span>
-                    </button>
-                    <div class="user-profile" id="user-profile">
-                        <img src="assets/avatar.svg" alt="Ananya" class="avatar" id="user-avatar">
-                        <div class="user-info">
-                            <span class="user-name">Ananya</span>
-                            <span class="user-role">Green Explorer</span>
-                        </div>
-                        <i class="fa-solid fa-chevron-down chevron"></i>
+                        <span class="bell-dot"></span>
                     </div>
                 </div>
             </header>
 
-            <!-- Page: Dashboard -->
             <div id="page-dashboard" class="page-section active">
-                <!-- Dashboard Content -->
-                <div class="dashboard-content">
-                    <!-- Stats Cards Row -->
-                    <div class="stats-cards-row">
-                        <div class="stat-card" id="stat-green-points">
-                            <div class="stat-info">
-                                <span class="stat-label"><span class="emoji">🌱</span> Green Points</span>
-                                <span class="stat-value" id="green-points-value">2,450</span>
-                                <span class="stat-change">+120 this week</span>
-                            </div>
-                            <div class="stat-icon green-bg">
-                                <i class="fa-solid fa-seedling"></i>
-                            </div>
-                        </div>
-                        <div class="stat-card" id="stat-carbon">
-                            <div class="stat-info">
-                                <span class="stat-label"><span class="emoji">🌿</span> Carbon Saved</span>
-                                <span class="stat-value" id="carbon-value">37.6 <small style="font-size:0.8rem;font-weight:600;">kg CO₂</small></span>
-                                <span class="stat-change">+8.4 kg this week</span>
-                            </div>
-                            <div class="stat-icon blue-bg">
-                                <i class="fa-solid fa-cloud"></i>
+                
+                <div class="eco-level-card">
+                    <h3 id="eco-level">Level 1</h3>
+                </div>
+
+                <div class="carousel-container" id="dashboard-banner-carousel">
+                    <div class="carousel-wrapper">
+                        <div class="carousel-slide slide-1 active">
+                            <div class="slide-content">
+                                <span class="slide-tag">GLOBAL NEWS</span>
+                                <h3>Plastic Bans Intensify in 2026</h3>
+                                <p>Over 45 nations passed aggressive strict mandates prohibiting single use non-recyclable packing materials this spring quarter.</p>
                             </div>
                         </div>
-                        <div class="stat-card" id="stat-money">
-                            <div class="stat-info">
-                                <span class="stat-label"><span class="emoji">💰</span> Money Saved</span>
-                                <span class="stat-value" id="money-value">₹1,850</span>
-                                <span class="stat-change">+₹320 this week</span>
-                            </div>
-                            <div class="stat-icon yellow-bg">
-                                <i class="fa-solid fa-piggy-bank"></i>
-                            </div>
-                        </div>
-                        <div class="stat-card" id="stat-badges">
-                            <div class="stat-info">
-                                <span class="stat-label"><span class="emoji">🏅</span> Badges</span>
-                                <span class="stat-value" id="badges-value">8</span>
-                                <span class="stat-change" style="color:var(--gray-400);">View all ›</span>
-                            </div>
-                            <div class="stat-icon orange-bg">
-                                <i class="fa-solid fa-award"></i>
+                        <div class="carousel-slide slide-2">
+                            <div class="slide-content">
+                                <span class="slide-tag">ECO TIP</span>
+                                <h3>Phantom Energy Load Waste</h3>
+                                <p>Unplugging televisions, microwave networks and laptop adaptors eliminates roughly 8% of residential carbon expenditures.</p>
                             </div>
                         </div>
                     </div>
+                    <div class="carousel-dots">
+                        <span class="dot active" data-slide="0"></span>
+                        <span class="dot" data-slide="1"></span>
+                    </div>
+                </div>
 
-                    <!-- Middle Section: Banner + Redeem -->
-                    <div class="middle-grid">
-                        <!-- Banner Card -->
-                        <div class="banner-card" id="rewards-banner">
-                            <div class="banner-content">
-                                <h2>Turn Your Actions<br>Into Rewards</h2>
-                                <p>Track, earn points and redeem exciting rewards from top sustainable brands.</p>
-                                <button class="explore-btn" id="explore-rewards-btn">
-                                    <i class="fa-solid fa-gift"></i> Explore Rewards
-                                </button>
-                            </div>
-                            <div class="banner-image">
-                                <img src="assets/banner-illustration.svg" alt="Rewards Illustration" id="banner-img">
-                            </div>
-                            <div class="banner-points-badge">
-                                <span class="points-value">+250</span>
-                                <span class="points-label">Points Earned</span>
-                            </div>
-                            <div class="banner-dots">
-                                <span class="dot active" data-slide="0"></span>
-                                <span class="dot" data-slide="1"></span>
-                                <span class="dot" data-slide="2"></span>
-                                <span class="dot" data-slide="3"></span>
-                            </div>
+                <div class="stats-cards-row">
+                    <div class="stat-card accent-green">
+                        <div class="stat-info">
+                            <span class="stat-label">Carbon Abated</span>
+                            <span class="stat-value" id="carbon-value">0.0 <small>kg CO₂</small></span>
+                            <span class="stat-change positive"><i class="fa-solid fa-arrow-trend-up"></i> +14.2% this week</span>
                         </div>
-
-                        <!-- Redeem Your Points -->
-                        <div class="redeem-card" id="redeem-section">
-                            <div class="redeem-header">
-                                <h3>Redeem Your Points</h3>
-                                <span class="view-all" data-go-to="rewards">View all ›</span>
-                            </div>
-                            <div class="redeem-list" id="redeem-list">
-                                <div class="redeem-item" data-coupon-id="derma-10">
-                                    <div class="brand-logo" style="background:#f0f0f0; display:flex; align-items:center; justify-content:center; font-weight:700; color:#1a5276; font-size:0.6rem; width:48px; height:48px; border-radius:6px;">derma<br>Co</div>
-                                    <div class="offer-info">
-                                        <span class="offer-title">10% Off on Skincare</span>
-                                        <span class="offer-points">500 Points</span>
-                                    </div>
-                                    <button class="redeem-btn" data-points="500" data-brand="Derma Co" data-code="DERMA-ECO-10">Redeem</button>
-                                </div>
-                                <div class="redeem-item" data-coupon-id="evolve-15">
-                                    <div class="brand-logo" style="background:#e8f5e9; display:flex; align-items:center; justify-content:center; font-weight:600; color:#2e7d32; font-size:0.55rem; text-align:center; width:48px; height:48px; border-radius:6px;">evolve<br>together</div>
-                                    <div class="offer-info">
-                                        <span class="offer-title">15% Off on Clothing</span>
-                                        <span class="offer-points">750 Points</span>
-                                    </div>
-                                    <button class="redeem-btn" data-points="750" data-brand="Evolve Together" data-code="EVOLVE-CLOTH-15">Redeem</button>
-                                </div>
-                                <div class="redeem-item" data-coupon-id="mama-20">
-                                    <div class="brand-logo" style="background:#fff3e0; display:flex; align-items:center; justify-content:center; font-weight:700; color:#e65100; font-size:0.5rem; text-align:center; width:48px; height:48px; border-radius:6px;">mama<br>earth</div>
-                                    <div class="offer-info">
-                                        <span class="offer-title">20% Off on Orders</span>
-                                        <span class="offer-points">1000 Points</span>
-                                    </div>
-                                    <button class="redeem-btn" data-points="1000" data-brand="Mamaearth" data-code="MAMA-GREEN-20">Redeem</button>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="stat-icon green-bg"><i class="fa-solid fa-cloud-arrow-down"></i></div>
                     </div>
 
-                    <!-- Content Section: Track & Earn, AI Insights, Progress, Partner Brands -->
-                    <div class="content-grid">
-                        <!-- Track & Earn -->
-                        <div class="section-card" id="track-earn-section">
-                            <div class="section-header">
-                                <h3>Track & Earn</h3>
-                                <span class="view-all" data-go-to="track">View all ›</span>
-                            </div>
-                            <div class="track-grid">
-                                <div class="track-item" id="track-recycle-card">
-                                    <div class="track-icon recycle">
-                                        <i class="fa-solid fa-recycle"></i>
-                                    </div>
-                                    <div class="track-info">
-                                        <h4>Recycle Clothes</h4>
-                                        <p>Upload donation proof</p>
-                                        <span class="points">+100 Points</span>
-                                    </div>
-                                </div>
-                                <div class="track-item" id="track-bottle-card">
-                                    <div class="track-icon bottle">
-                                        <i class="fa-solid fa-bottle-water"></i>
-                                    </div>
-                                    <div class="track-info">
-                                        <h4>Use Reusable Bottle</h4>
-                                        <p>Upload a photo</p>
-                                        <span class="points">+50 Points</span>
-                                    </div>
-                                </div>
-                                <div class="track-item" id="track-ecobuy-card">
-                                    <div class="track-icon eco-buy">
-                                        <i class="fa-solid fa-bag-shopping"></i>
-                                    </div>
-                                    <div class="track-info">
-                                        <h4>Buy Eco-Friendly</h4>
-                                        <p>Upload bill or QR scan</p>
-                                        <span class="points">+150 Points</span>
-                                    </div>
-                                </div>
-                                <div class="track-item" id="track-cycle-card">
-                                    <div class="track-icon cycle">
-                                        <i class="fa-solid fa-bicycle"></i>
-                                    </div>
-                                    <div class="track-info">
-                                        <h4>Walk or Cycle</h4>
-                                        <p>Track your activity</p>
-                                        <span class="points">+80 Points</span>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="stat-card accent-blue">
+                        <div class="stat-info">
+                            <span class="stat-label">Capital Saved</span>
+                            <span class="stat-value" id="money-value">₹0</span>
+                            <span class="stat-change positive"><i class="fa-solid fa-arrow-trend-up"></i> Saved on fuel & bags</span>
                         </div>
+                        <div class="stat-icon blue-bg"><i class="fa-solid fa-wallet"></i></div>
+                    </div>
 
-                        <!-- AI Insights -->
-                        <div class="section-card" id="ai-insights-section">
-                            <div class="section-header">
-                                <h3>AI Insights</h3>
-                                <span class="view-all" data-go-to="insights">Explore ›</span>
-                            </div>
-                            <p style="font-size:0.8rem; color:var(--gray-500); margin-bottom:12px;">AI suggests you can save more!</p>
-                            <div class="ai-insights-list">
-                                <div class="insight-item">
-                                    <div class="insight-icon">
-                                        <i class="fa-solid fa-bolt"></i>
-                                    </div>
-                                    <div class="insight-text">
-                                        <p>You used 18% more electricity than last month.<br><span class="save-amount">Save up to ₹350</span></p>
-                                    </div>
-                                </div>
-                                <div class="insight-item">
-                                    <div class="insight-icon">
-                                        <i class="fa-solid fa-droplet"></i>
-                                    </div>
-                                    <div class="insight-text">
-                                        <p>You consumed 12% more water than last month.<br><span class="save-amount">Save up to ₹180</span></p>
-                                    </div>
-                                </div>
-                                <div class="insight-item">
-                                    <div class="insight-icon">
-                                        <i class="fa-solid fa-bicycle"></i>
-                                    </div>
-                                    <div class="insight-text">
-                                        <p>Try using cycle 3 days a week.<br>You can save <span class="save-amount">4.2 kg CO₂</span></p>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="stat-card accent-amber">
+                        <div class="stat-info">
+                            <span class="stat-label">Badges Earned</span>
+                            <span class="stat-value" id="badges-value">0</span>
+                            <span class="stat-change"><i class="fa-solid fa-certificate"></i> Next tier unlocks at 10</span>
                         </div>
+                        <div class="stat-icon amber-bg"><i class="fa-solid fa-award"></i></div>
+                    </div>
 
-                        <!-- My Progress -->
-                        <div class="section-card" id="progress-section">
+                    <div class="stat-card">
+                        <div class="stat-icon">🌍</div>
+                        <div class="stat-content">
+                            <h3>Earth Health</h3>
+                            <span id="earth-health-score">85%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid-layout">
+                    
+                    <div class="grid-left-column">
+                        
+                        <div class="section-card goal-progress-card">
                             <div class="section-header">
-                                <h3>My Progress</h3>
-                                <span class="view-all" data-go-to="impact">Details ›</span>
+                                <h3>Monthly Carbon Target</h3>
+                                <button class="header-action-btn" data-go-to="settings"><i class="fa-solid fa-gear"></i> Adjust Goal</button>
                             </div>
-                            <div class="progress-section">
-                                <div class="circular-progress" id="circular-progress">
-                                    <svg viewBox="0 0 120 120">
-                                        <circle class="bg-circle" cx="60" cy="60" r="50"></circle>
-                                        <circle class="progress-circle" cx="60" cy="60" r="50"
-                                            stroke-dasharray="314.16"
-                                            stroke-dashoffset="87.96"
-                                            id="progress-ring">
-                                        </circle>
+                            <div class="goal-progress-content">
+                                <div class="progress-ring-wrapper">
+                                    <svg class="svg-progress-ring" width="120" height="120">
+                                        <circle class="ring-bg-circle" stroke="#e2e8f0" stroke-width="10" fill="transparent" r="50" cx="60" cy="60"/>
+                                        <circle class="ring-fill-circle" id="progress-ring" stroke="#22c55e" stroke-width="10" fill="transparent" r="50" cx="60" cy="60" stroke-linecap="round"/>
                                     </svg>
-                                    <div class="progress-text">
-                                        <span class="progress-percent" id="progress-percent">72%</span>
-                                        <span class="progress-label">Goal Completed</span>
+                                    <span class="ring-center-text" id="progress-percent">0%</span>
+                                </div>
+                                <div class="goal-progress-details">
+                                    <p class="goal-message">Loading active target calculations...</p>
+                                    <div class="linear-progress-track">
+                                        <div class="linear-progress-fill" id="goal-progress-fill" style="width: 0%;"></div>
                                     </div>
+                                    <span class="linear-progress-caption">Progress tracker refreshes automatically upon valid receipt logging approvals.</span>
                                 </div>
-                                <p class="goal-text">Goal: Save <strong>50 kg CO₂</strong></p>
-                                <div class="goal-progress-bar">
-                                    <div class="fill" id="goal-progress-fill" style="width: 72%;"></div>
-                                </div>
-                                <p class="goal-message">You're doing great! Keep it up! 🌟</p>
                             </div>
                         </div>
 
-                        <!-- Partner Brands -->
-                        <div class="partner-brands-card" id="partner-brands">
+                        <div class="section-card entries-audit-card">
                             <div class="section-header">
-                                <h3>Partner Brands</h3>
-                                <span class="view-all" data-go-to="rewards">View all ›</span>
+                                <h3>Recent Active Actions</h3>
+                                <button class="header-action-btn" data-go-to="track"><i class="fa-solid fa-plus"></i> Add Action</button>
                             </div>
-                            <div class="brands-grid" id="brands-grid">
-                                <div class="brand-item">
-                                    <span class="brand-placeholder" style="font-weight:700; color:#1a5276;">derma Co</span>
-                                </div>
-                                <div class="brand-item">
-                                    <span class="brand-placeholder" style="font-weight:700; color:#e65100;">mama earth</span>
-                                </div>
-                                <div class="brand-item">
-                                    <span class="brand-placeholder" style="font-weight:700; color:#4a148c;">Bewakoof</span>
-                                </div>
-                                <div class="brand-item">
-                                    <span class="brand-placeholder" style="font-weight:700; color:#1b5e20;">The Body Shop</span>
-                                </div>
-                                <div class="brand-item">
-                                    <span class="brand-placeholder" style="font-weight:700; color:#2e7d32;">Plant Origins</span>
-                                </div>
-                                <div class="brand-item">
-                                    <span class="brand-placeholder" style="font-weight:700; color:#33691e;">Prakriti</span>
-                                </div>
+                            <div class="activity-feed-list" id="activity-list"></div>
+                        </div>
+
+                        <div class="achievement-card">
+                            <h3>🏆 Achievements</h3>
+                            <div id="achievement-list">
+                                No achievements yet
                             </div>
                         </div>
+
                     </div>
 
-                    <!-- Bottom Section: Leaderboard, Challenges, Activity -->
-                    <div class="bottom-grid">
-                        <!-- Community Leaderboard -->
-                        <div class="section-card" id="leaderboard-section">
+                    <div class="grid-right-column">
+                        
+                        <div class="section-card leaderboard-mini-card">
                             <div class="section-header">
-                                <h3>Community Leaderboard</h3>
-                                <span class="view-all" data-go-to="community">Feed ›</span>
+                                <h3>Circle Leaderboard</h3>
+                                <button class="header-action-btn" data-go-to="community"><i class="fa-solid fa-globe"></i> Open Circle</button>
                             </div>
-                            <div class="leaderboard-list" id="leaderboard-list">
-                                <div class="leaderboard-item">
-                                    <span class="rank">1</span>
-                                    <img src="assets/avatar.svg" alt="Rohan" class="user-avatar" id="lb-avatar-1">
-                                    <div class="lb-info">
-                                        <span class="lb-name">Rohan Verma</span>
-                                        <span class="lb-title">Green Champion</span>
-                                    </div>
-                                    <span class="lb-points">3,250 Points</span>
-                                </div>
-                                <div class="leaderboard-item highlight">
-                                    <span class="rank">2</span>
-                                    <img src="assets/avatar.svg" alt="Ananya" class="user-avatar" id="lb-avatar-2">
-                                    <div class="lb-info">
-                                        <span class="lb-name" id="lb-user-name">Ananya</span>
-                                        <span class="lb-title">Green Explorer (You)</span>
-                                    </div>
-                                    <span class="lb-points" id="lb-user-points">2,450 Points</span>
-                                </div>
-                                <div class="leaderboard-item">
-                                    <span class="rank">3</span>
-                                    <img src="assets/avatar.svg" alt="Priya" class="user-avatar" id="lb-avatar-3">
-                                    <div class="lb-info">
-                                        <span class="lb-name">Priya Singh</span>
-                                        <span class="lb-title">Eco Warrior</span>
-                                    </div>
-                                    <span class="lb-points">2,150 Points</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Popular Challenges -->
-                        <div class="section-card" id="challenges-section">
-                            <div class="section-header">
-                                <h3>Popular Challenges</h3>
-                                <span class="view-all" data-go-to="challenges">View all ›</span>
-                            </div>
-                            <div class="challenges-list" id="challenges-list">
-                                <div class="challenge-item" data-challenge-id="plastic">
-                                    <div class="challenge-icon plastic">
-                                        <i class="fa-solid fa-ban"></i>
-                                    </div>
-                                    <div class="challenge-info">
-                                        <span class="challenge-name">7 Day Plastic Free Challenge</span>
-                                        <span class="challenge-desc">Avoid single-use plastics</span>
-                                        <div class="challenge-meta">
-                                            <span class="challenge-points">+300 Points</span>
-                                            <div class="challenge-progress-bar">
-                                                <div class="fill" style="width: 71%;"></div>
-                                            </div>
-                                            <span class="challenge-fraction">5/7</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="challenge-item" data-challenge-id="cycling">
-                                    <div class="challenge-icon cycling">
-                                        <i class="fa-solid fa-bicycle"></i>
-                                    </div>
-                                    <div class="challenge-info">
-                                        <span class="challenge-name">Cycle for a Better Tomorrow</span>
-                                        <span class="challenge-desc">Cycle 20 km this week</span>
-                                        <div class="challenge-meta">
-                                            <span class="challenge-points">+250 Points</span>
-                                            <div class="challenge-progress-bar">
-                                                <div class="fill" style="width: 60%;"></div>
-                                            </div>
-                                            <span class="challenge-fraction">12/20 km</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="challenge-item" data-challenge-id="gifting">
-                                    <div class="challenge-icon gifting">
-                                        <i class="fa-solid fa-gift"></i>
-                                    </div>
-                                    <div class="challenge-info">
-                                        <span class="challenge-name">Green Gifting Challenge</span>
-                                        <span class="challenge-desc">Gift sustainable products</span>
-                                        <div class="challenge-meta">
-                                            <span class="challenge-points">+200 Points</span>
-                                            <div class="challenge-progress-bar">
-                                                <div class="fill" style="width: 40%;"></div>
-                                            </div>
-                                            <span class="challenge-fraction">2/5</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Recent Activity -->
-                        <div class="section-card" id="activity-section">
-                            <div class="section-header">
-                                <h3>Recent Activity</h3>
-                                <span class="view-all" id="activity-view-all">View all ›</span>
-                            </div>
-                            <div class="activity-list" id="activity-list">
-                                <!-- Will be dynamically generated in app.js -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Page: Track & Earn -->
-            <div id="page-track" class="page-section" style="display: none;">
-                <div class="dashboard-content">
-                    <div class="page-header-title">
-                        <h2>Track & Earn</h2>
-                        <p class="subtitle">Log your green actions, upload proof, and earn Green Points instantly!</p>
-                    </div>
-                    <div class="track-layout-grid">
-                        <div class="track-form-card">
-                            <div class="track-tab-nav">
-                                <button class="track-tab-btn active" data-tab="clothes"><i class="fa-solid fa-recycle"></i> Recycle Clothes</button>
-                                <button class="track-tab-btn" data-tab="bottle"><i class="fa-solid fa-bottle-water"></i> Reusable Bottle</button>
-                                <button class="track-tab-btn" data-tab="ecoshop"><i class="fa-solid fa-bag-shopping"></i> Eco Purchase</button>
-                                <button class="track-tab-btn" data-tab="transport"><i class="fa-solid fa-bicycle"></i> Transport</button>
-                            </div>
-                            <div class="track-tab-contents">
-                                <!-- Recycle Clothes Tab -->
-                                <div class="track-tab-pane active" id="pane-clothes">
-                                    <h3>Recycle Clothes</h3>
-                                    <p class="pane-description">Donate old clothes to certified recycling centers. Earn 100 Points per donation.</p>
-                                    <div class="input-group">
-                                        <label for="recycle-clothing-items">Number of clothes to recycle</label>
-                                        <input type="number" id="recycle-clothing-items" min="1" max="100" value="5" placeholder="e.g. 5">
-                                    </div>
-                                    <div class="input-group">
-                                        <label>Upload Donation Receipt</label>
-                                        <div class="upload-area" id="clothes-upload-area">
-                                            <i class="fa-solid fa-receipt upload-icon"></i>
-                                            <p class="upload-text">Click to upload or drag donation receipt here</p>
-                                            <input type="file" id="clothes-file-input" style="display:none;" accept="image/*,application/pdf">
-                                            <div class="preview-container" id="clothes-preview-container" style="display:none;">
-                                                <div class="preview-file-info">
-                                                    <i class="fa-solid fa-file-image"></i>
-                                                    <span id="clothes-file-name">receipt.jpg</span>
-                                                </div>
-                                                <button class="remove-preview-btn" id="clothes-remove-btn">&times;</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button class="action-submit-btn" id="submit-recycle-btn"><i class="fa-solid fa-check"></i> Submit Action & Earn 100 Pts</button>
-                                </div>
-
-                                <!-- Reusable Bottle Tab -->
-                                <div class="track-tab-pane" id="pane-bottle">
-                                    <h3>Reusable Bottle Check-In</h3>
-                                    <p class="pane-description">Upload a photo of your reusable bottle to verify you avoided single-use plastic. Earn 50 Points.</p>
-                                    <div class="input-group">
-                                        <label>Snap / Upload Bottle Photo</label>
-                                        <div class="upload-area" id="bottle-upload-area">
-                                            <i class="fa-solid fa-camera upload-icon"></i>
-                                            <p class="upload-text">Click to upload bottle image for AI verification</p>
-                                            <input type="file" id="bottle-file-input" style="display:none;" accept="image/*">
-                                            <div class="preview-container" id="bottle-preview-container" style="display:none;">
-                                                <img id="bottle-img-preview" src="" alt="Bottle Preview" class="img-preview">
-                                                <button class="remove-preview-btn" id="bottle-remove-btn">&times;</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button class="action-submit-btn" id="submit-bottle-btn"><i class="fa-solid fa-shield-halved"></i> Verify Photo & Earn 50 Pts</button>
-                                </div>
-
-                                <!-- Eco Purchase Tab -->
-                                <div class="track-tab-pane" id="pane-ecoshop">
-                                    <h3>Sustainable Purchase</h3>
-                                    <p class="pane-description">Bought products from our sustainable brand partners? Log your bill number to claim 150 Points.</p>
-                                    <div class="input-group-row">
-                                        <div class="input-group">
-                                            <label for="ecoshop-brand">Sustainable Brand</label>
-                                            <select id="ecoshop-brand">
-                                                <option value="Derma Co">Derma Co</option>
-                                                <option value="Mamaearth">Mamaearth</option>
-                                                <option value="The Body Shop">The Body Shop</option>
-                                                <option value="Bewakoof">Bewakoof</option>
-                                                <option value="Plant Origins">Plant Origins</option>
-                                            </select>
-                                        </div>
-                                        <div class="input-group">
-                                            <label for="ecoshop-bill-id">Bill / Invoice Number</label>
-                                            <input type="text" id="ecoshop-bill-id" placeholder="e.g. INV-98234-A">
-                                        </div>
-                                    </div>
-                                    <div class="input-group">
-                                        <label for="ecoshop-amount">Transaction Amount (₹)</label>
-                                        <input type="number" id="ecoshop-amount" min="1" value="499" placeholder="e.g. 499">
-                                    </div>
-                                    <button class="action-submit-btn" id="submit-ecoshop-btn"><i class="fa-solid fa-wallet"></i> Log Purchase & Earn 150 Pts</button>
-                                </div>
-
-                                <!-- Transport Tab -->
-                                <div class="track-tab-pane" id="pane-transport">
-                                    <h3>Walk, Cycle or Public Transit</h3>
-                                    <p class="pane-description">Choose a green transit mode today and log your distance. Earn 10 Points per km (max 80 Points).</p>
-                                    <div class="input-group-row">
-                                        <div class="input-group">
-                                            <label for="transport-mode">Transport Mode</label>
-                                            <select id="transport-mode">
-                                                <option value="Cycling">Cycling 🚲</option>
-                                                <option value="Walking">Walking 🚶</option>
-                                                <option value="Public Transit">Metro / Bus 🚍</option>
-                                                <option value="Electric Vehicle">EV Car/Scooter ⚡</option>
-                                            </select>
-                                        </div>
-                                        <div class="input-group">
-                                            <label for="transport-distance">Distance Travelled (km)</label>
-                                            <input type="number" id="transport-distance" min="0.5" step="0.5" value="8" placeholder="e.g. 8">
-                                        </div>
-                                    </div>
-                                    <button class="action-submit-btn" id="submit-transport-btn"><i class="fa-solid fa-bicycle"></i> Log Distance & Earn Points</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Carbon Savings Advisor Sidebar -->
-                        <div class="track-sidebar-card">
-                            <h3>Eco Impact Calculator</h3>
-                            <p class="sidebar-desc">See the impact of your logged actions in real-time.</p>
-                            <div class="calculator-metric">
-                                <div class="calc-label">Total CO₂ Saved Preview</div>
-                                <div class="calc-value" id="calc-co2-preview">0.0 kg CO₂</div>
-                            </div>
-                            <div class="calculator-metric">
-                                <div class="calc-label">Estimated Money Saved</div>
-                                <div class="calc-value" id="calc-money-preview">₹0</div>
-                            </div>
-                            <div class="green-tip-box">
-                                <h4>💡 Eco Tip</h4>
-                                <p id="dynamic-eco-tip">Every kilometer walked instead of driving saves 220g of CO₂ emissions. Keep moving!</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Page: AI Insights -->
-            <div id="page-insights" class="page-section" style="display: none;">
-                <div class="dashboard-content">
-                    <div class="page-header-title">
-                        <h2>AI Insights</h2>
-                        <p class="subtitle">AI-powered analytics of your resources and virtual eco-advisory chat.</p>
-                    </div>
-                    <div class="insights-layout-grid">
-                        <!-- Left Side: Interactive Graphs/Metrics -->
-                        <div class="insights-graphics-card">
-                            <h3>Utility Analysis (This Month vs Last)</h3>
-                            <p class="card-desc">Comparison statistics showing green trends and recommended thresholds.</p>
+                            <div class="leaderboard-mini-stack" id="community-mini-leaderboard"></div>
                             
-                            <!-- Graph 1: Electricity -->
-                            <div class="graph-metric-container">
-                                <div class="graph-header">
-                                    <span>Electricity Consumption</span>
-                                    <span class="warning-alert-text"><i class="fa-solid fa-triangle-exclamation"></i> 18% Higher</span>
+                            <div class="leaderboard-self-status-footer">
+                                <div class="status-left">
+                                    <i class="fa-solid fa-angles-up animated-bounce"></i>
+                                    <span>You are outperforming <strong>64%</strong> of area members!</span>
                                 </div>
-                                <div class="bar-chart-representation">
-                                    <div class="bar-item">
-                                        <span class="bar-label">Last Month</span>
-                                        <div class="bar-track"><div class="bar-fill prev-fill" style="width: 70%;"></div></div>
-                                        <span class="bar-value">220 kWh</span>
-                                    </div>
-                                    <div class="bar-item">
-                                        <span class="bar-label">This Month</span>
-                                        <div class="bar-track"><div class="bar-fill current-fill warning-bg" style="width: 85%;"></div></div>
-                                        <span class="bar-value">260 kWh</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Graph 2: Water -->
-                            <div class="graph-metric-container">
-                                <div class="graph-header">
-                                    <span>Water Consumption</span>
-                                    <span class="warning-alert-text"><i class="fa-solid fa-triangle-exclamation"></i> 12% Higher</span>
-                                </div>
-                                <div class="bar-chart-representation">
-                                    <div class="bar-item">
-                                        <span class="bar-label">Last Month</span>
-                                        <div class="bar-track"><div class="bar-fill prev-fill" style="width: 65%;"></div></div>
-                                        <span class="bar-value">4,100 L</span>
-                                    </div>
-                                    <div class="bar-item">
-                                        <span class="bar-label">This Month</span>
-                                        <div class="bar-track"><div class="bar-fill current-fill warning-bg" style="width: 75%;"></div></div>
-                                        <span class="bar-value">4,600 L</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Graph 3: Transportation -->
-                            <div class="graph-metric-container">
-                                <div class="graph-header">
-                                    <span>Carbon Intensity (Transport)</span>
-                                    <span class="success-alert-text"><i class="fa-solid fa-circle-check"></i> 15% Lower</span>
-                                </div>
-                                <div class="bar-chart-representation">
-                                    <div class="bar-item">
-                                        <span class="bar-label">Last Month</span>
-                                        <div class="bar-track"><div class="bar-fill prev-fill" style="width: 80%;"></div></div>
-                                        <span class="bar-value">95 kg CO₂</span>
-                                    </div>
-                                    <div class="bar-item">
-                                        <span class="bar-label">This Month</span>
-                                        <div class="bar-track"><div class="bar-fill current-fill success-bg" style="width: 65%;"></div></div>
-                                        <span class="bar-value">80 kg CO₂</span>
-                                    </div>
-                                </div>
+                                <div id="lb-user-name" style="display:none;"></div>
+                                <span class="status-points" id="lb-user-points">0 Points</span>
                             </div>
                         </div>
 
-                        <!-- Right Side: AI Assistant Chatbot -->
-                        <div class="insights-chat-card">
-                            <div class="chat-header">
-                                <div class="chat-bot-avatar">
-                                    <i class="fa-solid fa-robot"></i>
+                        <div class="quick-nav-cta-stack">
+                            <div class="cta-banner-card cta-challenges" data-go-to="challenges">
+                                <div class="cta-info">
+                                    <h4>Active Challenges</h4>
+                                    <p>Join the cycling sprint to pocket an easy 250 bonus points today.</p>
                                 </div>
-                                <div class="chat-bot-info">
-                                    <h4>EcoWise AI</h4>
-                                    <span>Online Advisor</span>
+                                <i class="fa-solid fa-chevron-right cta-arrow"></i>
+                            </div>
+
+                            <div class="cta-banner-card cta-insights" data-go-to="insights">
+                                <div class="cta-info">
+                                    <h4>Ask AI Sustainability Bot</h4>
+                                    <p>Get personalized advice on lowering house utility costs bills.</p>
+                                </div>
+                                <i class="fa-solid fa-chevron-right cta-arrow"></i>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div id="page-track" class="page-section" style="display: none;">
+                <div class="section-title-block">
+                    <h2>Track Green Deeds & Earn Rewards</h2>
+                    <p>Our advanced document processing network verifies recycling invoices, green commutes, and eco-purchases to credit your wallet instantly.</p>
+                </div>
+
+                <div class="track-module-layout">
+                    <div class="track-forms-card">
+                        <div class="track-tabs-row">
+                            <button class="track-tab-btn active" data-tab="clothes"><i class="fa-solid fa-shirt"></i> Recycle Clothes</button>
+                            <button class="track-tab-btn" data-tab="bottle"><i class="fa-solid fa-bottle-water"></i> Eco Check-in</button>
+                            <button class="track-tab-btn" data-tab="ecoshop"><i class="fa-solid fa-bag-shopping"></i> Green Brands</button>
+                            <button class="track-tab-btn" data-tab="transport"><i class="fa-solid fa-bicycle"></i> Eco Transit</button>
+                        </div>
+
+                        <div class="track-tab-pane active" id="pane-clothes">
+                            <div class="form-group">
+                                <label for="recycle-clothing-items">Quantity of Garments Handed Over</label>
+                                <input type="number" id="recycle-clothing-items" min="1" value="5"/>
+                                <span class="input-caption-hint">Accepted at all authorized clothing donation center boxes or partner brand retail sites.</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Upload Certified Handover Receipt (AI OCR Verification)</label>
+                                <div class="upload-dropzone-area" id="clothes-upload-area">
+                                    <input type="file" id="clothes-file-input" accept="image/*,application/pdf" style="display:none;"/>
+                                    <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                                    <p class="upload-text">Click to upload or drag donation receipt here</p>
+                                    <div class="upload-file-preview-row" id="clothes-preview-container" style="display: none;">
+                                        <i class="fa-solid fa-file-invoice-dollar text-green"></i>
+                                        <span id="clothes-file-name" class="preview-filename-txt">receipt.pdf</span>
+                                        <button class="remove-upload-file-btn" id="clothes-remove-btn">&times;</button>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="chat-messages-box" id="chat-messages-box">
-                                <div class="message bot">
-                                    <p>Hello! I am EcoWise AI, your personal energy advisor. Looking at your stats, you had higher electricity and water usage this month, but did great in walking/cycling! How can I help you conserve today?</p>
+                            <button class="action-submit-trigger-btn" id="submit-recycle-btn"><i class="fa-solid fa-wand-magic-sparkles"></i> Verify Handover Receipt</button>
+                        </div>
+
+                        <div class="track-tab-pane" id="pane-bottle">
+                            <p class="pane-description-text">Snap a selfie or photo of your active reusable water flask or thermos cup at a public space to claim daily hydration points.</p>
+                            <div class="form-group">
+                                <label>Snapshot Reusable Bottle Container</label>
+                                <div class="upload-dropzone-area img-capture-zone" id="bottle-upload-area">
+                                    <input type="file" id="bottle-file-input" accept="image/*" capture="environment" style="display:none;"/>
+                                    <i class="fa-solid fa-camera upload-icon"></i>
+                                    <p class="upload-text">Click to launch camera or upload snapshot image file</p>
+                                    <div class="captured-image-frame-container" id="bottle-preview-container" style="display: none;">
+                                        <img src="" alt="Capture Preview" id="bottle-img-preview"/>
+                                        <button class="remove-upload-file-btn floating-badge-remove" id="bottle-remove-btn">&times;</button>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="chat-suggestion-chips">
-                                <button class="chip-btn">How to reduce electricity bill?</button>
-                                <button class="chip-btn">Why is water saving important?</button>
-                                <button class="chip-btn">Tips for green commuting</button>
+                            <button class="action-submit-trigger-btn blue-btn" id="submit-bottle-btn"><i class="fa-solid fa-microchip"></i> Run Object Vision Scan</button>
+                        </div>
+
+                        <div class="track-tab-pane" id="pane-ecoshop">
+                            <div class="form-group">
+                                <label for="ecoshop-brand">Select Sustainable Partner Merchant</label>
+                                <select id="ecoshop-brand">
+                                    <option>Mamaearth organic products line</option>
+                                    <option>The Derma Co zero waste skincare</option>
+                                    <option>The Body Shop India</option>
+                                    <option>Evolve Together apparel</option>
+                                    <option>Bewakoof Eco-conscious Collection</option>
+                                </select>
                             </div>
-                            <div class="chat-input-bar">
-                                <input type="text" id="chat-user-input" placeholder="Ask EcoWise AI a question...">
-                                <button id="chat-send-btn"><i class="fa-solid fa-paper-plane"></i></button>
+                            <div class="form-grid-two-columns">
+                                <div class="form-group">
+                                    <label for="ecoshop-bill-id">Receipt Invoice Reference Number</label>
+                                    <input type="text" id="ecoshop-bill-id" placeholder="e.g. INV-2026-8941"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ecoshop-amount">Total Purchase Worth (INR)</label>
+                                    <input type="number" id="ecoshop-amount" min="1" placeholder="₹ Value paid"/>
+                                </div>
                             </div>
+                            <button class="action-submit-trigger-btn" id="submit-ecoshop-btn"><i class="fa-solid fa-shield-checkmark"></i> Securely Transmit Log Ledger</button>
+                        </div>
+
+                        <div class="track-tab-pane" id="pane-transport">
+                            <div class="form-grid-two-columns">
+                                <div class="form-group">
+                                    <label for="transport-mode">Green Commuting Mode</label>
+                                    <select id="transport-mode">
+                                        <option>Bicycle/Cycling</option>
+                                        <option>Walking/Jogging</option>
+                                        <option>Public Transit (Metro Train/Bus)</option>
+                                        <option>Electric Vehicle (EV/E-Rickshaw)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="transport-distance">Distance Travelled (kilometers)</label>
+                                    <input type="number" id="transport-distance" min="0.1" step="0.1" value="5"/>
+                                </div>
+                            </div>
+                            <button class="action-submit-trigger-btn amber-btn" id="submit-transport-btn"><i class="fa-solid fa-location-dot"></i> Log GPS Trip Mileage</button>
+                        </div>
+                    </div>
+
+                    <div class="track-preview-summary-card">
+                        <h3>Estimated Action Dividend</h3>
+                        <div class="live-preview-numerical-grid">
+                            <div class="preview-stat-box">
+                                <span class="label">Carbon Abatement</span>
+                                <h4 id="calc-co2-preview" class="value text-green">4.0 kg CO₂</h4>
+                            </div>
+                            <div class="preview-stat-box">
+                                <span class="label">Simulated Financial Offset</span>
+                                <h4 id="calc-money-preview" class="value text-blue">₹250</h4>
+                            </div>
+                        </div>
+
+                        <div class="educational-tip-box">
+                            <div class="tip-header-row">
+                                <i class="fa-solid fa-lightbulb text-amber animate-pulse"></i>
+                                <span>Environmental Factoid Glance</span>
+                            </div>
+                            <p id="dynamic-eco-tip" class="tip-body-content">Recycling 1kg of cotton fabric saves approx 30kg of water compared to producing a new one from scratch!</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Page: Challenges -->
+            <div id="page-insights" class="page-section" style="display: none;">
+                <div class="section-title-block">
+                    <h2>AI Sustainability Assistant Workspace</h2>
+                    <p>Consult our specialized LLM fine-tuned on resource conservation metrics to discover high impact methods of downscaling your environmental footprints.</p>
+                </div>
+
+                <div class="insights-workspace-layout">
+                    <div class="ai-chatbot-interface-card">
+                        <div class="chatbot-messages-scroller" id="chat-messages-container">
+                            <div class="chat-bubble-msg system-msg">
+                                <div class="bubble-avatar"><i class="fa-solid fa-robot"></i></div>
+                                <div class="bubble-text-content">
+                                    <p>Hello! I am your <strong>CarbonWise AI Assistant</strong>. Send me a photograph of an item to learn if it can be recycled, paste an energy bill to extract consumption anomalies, or simply ask any green advice question! 🌿🤖</p>
+                                    <span class="bubble-time-stamp">System Engine • Active</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="chatbot-input-sticky-footer">
+                            <div class="chat-input-controls-row">
+                                <button class="chat-attach-media-btn" id="chat-attach-btn" title="Attach Utility Bills/Photos"><i class="fa-solid fa-paperclip"></i></button>
+                                <input type="text" id="chat-text-input" placeholder="Ask e.g. How can I safely recycle standard laptop batteries in Mumbai?"/>
+                                <button class="chat-message-send-btn" id="chat-send-btn"><i class="fa-solid fa-paper-plane"></i></button>
+                            </div>
+                            <input type="file" id="chat-hidden-file-input" accept="image/*,application/pdf" style="display: none;"/>
+                            <div id="chat-attachment-indicator" class="attachment-status-pill" style="display: none;">
+                                <i class="fa-solid fa-file-circle-check"></i> <span id="chat-attached-filename">bill.jpg</span>
+                                <button id="chat-remove-attachment-btn">&times;</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ai-suggestions-sidebar-stack">
+                        <h3>Starter Suggestion Prompts</h3>
+                        <div class="suggestion-pill-item" data-prompt="Analyze how switching household lighting to smart LEDs affects carbon abated metrics.">
+                            <i class="fa-solid fa-bolt"></i>
+                            <span>Smart LED Lighting Impact</span>
+                        </div>
+                        <div class="suggestion-pill-item" data-prompt="Draft a structured weekend plan for starting a home kitchen wet waste compost bin system.">
+                            <i class="fa-solid fa-recycle"></i>
+                            <span>Kitchen Wet Waste Composting</span>
+                        </div>
+                        <div class="suggestion-pill-item" data-prompt="What brands of clothing in India offer verifiable transparent source supply chains?">
+                            <i class="fa-solid fa-shirt"></i>
+                            <span>Eco Clothing Brands India</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div id="page-challenges" class="page-section" style="display: none;">
-                <div class="dashboard-content">
-                    <div class="page-header-title">
-                        <h2>Green Challenges</h2>
-                        <p class="subtitle">Join eco-missions, log daily achievements, and claim bonus points!</p>
-                    </div>
-                    <div class="challenges-tabs">
-                        <button class="challenge-tab-btn active" data-tab="active">My Joined Challenges</button>
-                        <button class="challenge-tab-btn" data-tab="available">Available Challenges</button>
-                    </div>
-                    
-                    <!-- My Active Challenges -->
-                    <div class="challenges-section-content" id="challenges-active-pane">
-                        <div class="challenges-grid-layout" id="active-challenges-grid">
-                            <!-- Populated dynamically by app.js -->
-                        </div>
-                    </div>
-
-                    <!-- Available Challenges -->
-                    <div class="challenges-section-content" id="challenges-available-pane" style="display: none;">
-                        <div class="challenges-grid-layout" id="available-challenges-grid">
-                            <!-- Populated dynamically by app.js -->
-                        </div>
-                    </div>
+                <div class="section-title-block">
+                    <h2>Active Gamified Challenges Community Standings</h2>
+                    <p>Compete in time-bound localized eco-sprints alongside peers to secure immense bonus reward pool drops.</p>
                 </div>
+                <div class="challenges-cards-grid" id="challenges-render-target"></div>
             </div>
 
-            <!-- Page: Marketplace -->
             <div id="page-marketplace" class="page-section" style="display: none;">
-                <div class="dashboard-content">
-                    <div class="page-header-title">
-                        <h2>Sustainable Marketplace</h2>
-                        <p class="subtitle">Use your hard-earned Green Points to purchase eco-friendly goods.</p>
-                    </div>
-                    <div class="marketplace-banner">
-                        <div class="market-banner-text">
-                            <h3>Store Balance</h3>
-                            <div class="balance-amount"><i class="fa-solid fa-seedling"></i> <span id="market-points-balance">2,450</span> Points</div>
-                            <p>Points will be deducted instantly upon redemption.</p>
-                        </div>
-                    </div>
-                    <div class="marketplace-grid" id="marketplace-grid">
-                        <!-- Populated dynamically by app.js -->
+                <div class="section-title-block">
+                    <h2>The Eco Marketplace</h2>
+                    <p>Exchange earned score tokens directly for physical zero-waste goods. We fulfill premium eco-friendly utility goods shipping entirely free of tariff packaging fees.</p>
+                    <div class="store-balance-alert">
+                        <i class="fa-solid fa-wallet"></i>
+                        <span>Spendable Balance Pool: <strong id="market-points-balance">0</strong> CarbonWise Tokens</span>
                     </div>
                 </div>
+                <div class="marketplace-store-grid" id="marketplace-render-target"></div>
             </div>
 
-            <!-- Page: Rewards -->
             <div id="page-rewards" class="page-section" style="display: none;">
-                <div class="dashboard-content">
-                    <div class="page-header-title">
-                        <h2>Brand Vouchers</h2>
-                        <p class="subtitle">Exchange points for shopping vouchers at top green brand outlets.</p>
-                    </div>
-                    <div class="rewards-layout-grid">
-                        <!-- Left: Available Coupons -->
-                        <div class="coupons-card">
-                            <h3>Available Coupons</h3>
-                            <p class="card-desc">Redeem discount vouchers from certified brands.</p>
-                            <div class="coupons-list" id="rewards-coupons-list">
-                                <!-- Populated dynamically by app.js -->
-                            </div>
-                        </div>
-
-                        <!-- Right: Active Redeemed Coupons -->
-                        <div class="active-wallet-card">
-                            <h3>My Redeemed Vouchers</h3>
-                            <p class="card-desc">Vouchers currently active and ready to use at checkout.</p>
-                            <div class="vouchers-wallet-list" id="vouchers-wallet-list">
-                                <!-- Populated dynamically by app.js -->
-                            </div>
-                        </div>
-                    </div>
+                <div class="section-title-block">
+                    <h2>Brand Vouchers & Discount Token Codes</h2>
+                    <p>Unlock premium discount vouchers from mainstream sustainable networks. Vouchers populate digital codes for pasting on standard e-commerce carts.</p>
                 </div>
             </div>
 
-            <!-- Page: Community -->
-            <div id="page-community" class="page-section" style="display: none;">
-                <div class="dashboard-content">
-                    <div class="page-header-title">
-                        <h2>Community Feed</h2>
-                        <p class="subtitle">Share your eco achievements and support fellow green citizens.</p>
-                    </div>
-                    <div class="community-layout-grid">
-                        <!-- Left: Feed Posts -->
-                        <div class="community-feed-pane">
-                            <!-- Share Action Card -->
-                            <div class="share-action-card">
-                                <div class="share-header">
-                                    <img src="assets/avatar.svg" alt="User Avatar" class="mini-avatar header-avatar">
-                                    <textarea id="community-post-text" placeholder="Share a green action (e.g. Planted a sapling, commuted by cycling)..."></textarea>
-                                </div>
-                                <div class="share-footer">
-                                    <div class="share-attachments">
-                                        <button class="attach-btn" id="post-add-photo"><i class="fa-solid fa-image"></i> Add Photo</button>
-                                        <span id="post-photo-status" class="photo-attached-status" style="display:none;">✓ Photo Attached</span>
-                                    </div>
-                                    <button class="submit-post-btn" id="submit-post-btn">Post Action</button>
-                                </div>
-                            </div>
-
-                            <!-- Feed Stream -->
-                            <div class="community-feed-stream" id="community-feed-stream">
-                                <!-- Populated dynamically by app.js -->
-                            </div>
-                        </div>
-
-                        <!-- Right: Side Leaderboard -->
-                        <div class="community-sidebar">
-                            <div class="sidebar-widget">
-                                <h3>Top Green Citizens</h3>
-                                <div class="leaderboard-mini-list" id="community-mini-leaderboard">
-                                    <!-- Populated dynamically by app.js -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Page: Impact Report -->
-            <div id="page-impact" class="page-section" style="display: none;">
-                <div class="dashboard-content">
-                    <div class="page-header-title">
-                        <h2>Impact Report</h2>
-                        <p class="subtitle">A visual breakdown of your personal contributions to saving Earth.</p>
-                    </div>
-                    <div class="impact-metrics-grid">
-                        <div class="impact-card-detailed green-gradient">
-                            <div class="impact-detail-info">
-                                <h4>Trees Saved Equivalent</h4>
-                                <span class="large-val" id="impact-trees-count">2.3 Trees</span>
-                                <p>Your carbon offset is equivalent to the annual absorption of over two mature trees.</p>
-                            </div>
-                            <div class="impact-detail-icon"><i class="fa-solid fa-tree"></i></div>
-                        </div>
-                        <div class="impact-card-detailed blue-gradient">
-                            <div class="impact-detail-info">
-                                <h4>Water Conserved</h4>
-                                <span class="large-val" id="impact-water-count">560 L</span>
-                                <p>Saved through sustainable daily checks and reducing packaging waste.</p>
-                            </div>
-                            <div class="impact-detail-icon"><i class="fa-solid fa-droplet"></i></div>
-                        </div>
-                        <div class="impact-card-detailed dark-green-gradient">
-                            <div class="impact-detail-info">
-                                <h4>Total CO₂ Offset</h4>
-                                <span class="large-val" id="impact-co2-count">37.6 kg</span>
-                                <p>Offset through clothing recycle drives and avoiding fuel vehicle transit.</p>
-                            </div>
-                            <div class="impact-detail-icon"><i class="fa-solid fa-leaf"></i></div>
-                        </div>
-                    </div>
-
-                    <!-- Certificate Generation Area -->
-                    <div class="certificate-section-card">
-                        <div class="cert-intro">
-                            <h3>Green Explorer Certificate</h3>
-                            <p>Generate and view your verified eco-achiever badge signed by the CarbonWise Eco Council.</p>
-                            <button class="cert-download-btn" id="generate-certificate-btn"><i class="fa-solid fa-award"></i> View & Generate Certificate</button>
-                        </div>
-                        <div class="cert-preview-card" id="cert-render-area">
-                            <div class="cert-border">
-                                <div class="cert-inner-border">
-                                    <div class="cert-header">
-                                        <i class="fa-solid fa-leaf cert-leaf-icon"></i>
-                                        <h2>CERTIFICATE OF GREEN IMPACT</h2>
-                                        <p class="cert-sub">Presented by CarbonWise Rewards</p>
-                                    </div>
-                                    <div class="cert-body">
-                                        <p class="cert-text">This is proudly awarded to</p>
-                                        <h1 class="cert-user-name" id="cert-display-name">Ananya</h1>
-                                        <p class="cert-achievement-desc">for outstanding commitment to sustainable living and green stewardship, achieving an outstanding score of <strong id="cert-display-points">2,450</strong> points and offsetting a total of <strong id="cert-display-co2">37.6 kg</strong> of CO₂ emissions.</p>
-                                    </div>
-                                    <div class="cert-footer">
-                                        <div class="signature-block">
-                                            <span class="signature-line font-signature">Gaia Earth</span>
-                                            <span class="signature-title">Eco Council Chair</span>
-                                        </div>
-                                        <div class="badge-block">
-                                            <div class="cert-stamp">
-                                                <i class="fa-solid fa-certificate"></i>
-                                                <span>VERIFIED</span>
-                                            </div>
-                                        </div>
-                                        <div class="signature-block">
-                                            <span class="signature-line font-signature" id="cert-date-sign">June 2026</span>
-                                            <span class="signature-title">Date of Issue</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Page: Settings -->
-            <div id="page-settings" class="page-section" style="display: none;">
-                <div class="dashboard-content">
-                    <div class="page-header-title">
-                        <h2>Settings</h2>
-                        <p class="subtitle">Update your profile parameters, notifications, and visual styling theme.</p>
-                    </div>
-                    <div class="settings-form-layout">
-                        <!-- Profile Card -->
-                        <div class="settings-card">
-                            <h3>Profile Preferences</h3>
-                            <div class="form-grid">
-                                <div class="form-item">
-                                    <label for="settings-name-input">Display Name</label>
-                                    <input type="text" id="settings-name-input" value="Ananya">
-                                </div>
-                                <div class="form-item">
-                                    <label for="settings-role-input">User Role Badge</label>
-                                    <input type="text" id="settings-role-input" value="Green Explorer" readonly>
-                                </div>
-                                <div class="form-item">
-                                    <label for="settings-goal-input">Monthly Carbon Goal (kg CO₂)</label>
-                                    <input type="number" id="settings-goal-input" value="50">
-                                </div>
-                            </div>
-                            <button class="settings-save-btn" id="save-profile-btn"><i class="fa-solid fa-floppy-disk"></i> Save Profile Details</button>
-                        </div>
-
-                        <!-- System Customizer -->
-                        <div class="settings-card">
-                            <h3>Theme & Notifications</h3>
-                            <div class="settings-options-list">
-                                <div class="option-row">
-                                    <div class="option-desc">
-                                        <h4>Dark Mode Theme</h4>
-                                        <p>Enable dark background styling optimized for lower screen energy.</p>
-                                    </div>
-                                    <label class="switch-toggle">
-                                        <input type="checkbox" id="dark-theme-toggle">
-                                        <span class="slider"></span>
-                                    </label>
-                                </div>
-                                <div class="option-row">
-                                    <div class="option-desc">
-                                        <h4>Weekly Email Summaries</h4>
-                                        <p>Receive weekly progress emails detailing points and carbon metrics.</p>
-                                    </div>
-                                    <label class="switch-toggle">
-                                        <input type="checkbox" id="email-summary-toggle" checked>
-                                        <span class="slider"></span>
-                                    </label>
-                                </div>
-                                <div class="option-row">
-                                    <div class="option-desc">
-                                        <h4>Push Notification Alerts</h4>
-                                        <p>Get instant browser alerts when new brand coupons are ready.</p>
-                                    </div>
-                                    <label class="switch-toggle">
-                                        <input type="checkbox" id="push-notif-toggle" checked>
-                                        <span class="slider"></span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Page: Developer Panel -->
-            <div id="page-developer" class="page-section" style="display: none;">
-                <div class="dashboard-content">
-                    <div class="page-header-title">
-                        <h2>Developer Management Panel</h2>
-                        <p class="subtitle">System diagnostics, database inspection, and administrative controls (Developer Mode).</p>
-                    </div>
-                    
-                    <!-- Server Analytics Summary -->
-                    <div class="stats-cards-row">
-                        <div class="stat-card">
-                            <div class="stat-info">
-                                <span class="stat-label">Registered Accounts</span>
-                                <span class="stat-value" id="dev-total-users">0</span>
-                            </div>
-                            <div class="stat-icon blue-bg"><i class="fa-solid fa-users"></i></div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-info">
-                                <span class="stat-label">Total Allocated Points</span>
-                                <span class="stat-value" id="dev-total-points">0</span>
-                            </div>
-                            <div class="stat-icon green-bg"><i class="fa-solid fa-seedling"></i></div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-info">
-                                <span class="stat-label">Total Savings CO₂</span>
-                                <span class="stat-value" id="dev-total-co2">0.0 kg</span>
-                            </div>
-                            <div class="stat-icon yellow-bg"><i class="fa-solid fa-cloud"></i></div>
-                        </div>
-                    </div>
-
-                    <!-- User Records Table -->
-                    <div class="settings-card" style="margin-top:20px;">
-                        <h3 style="margin-bottom:12px;">User Account Records</h3>
-                        <div style="overflow-x:auto;">
-                            <table class="dev-db-table" style="width:100%; border-collapse:collapse; text-align:left; font-size:0.85rem;">
-                                <thead>
-                                    <tr style="border-bottom:2px solid var(--gray-200); color:var(--gray-500); font-weight:600;">
-                                        <th style="padding:10px;">Name</th>
-                                        <th style="padding:10px;">Email</th>
-                                        <th style="padding:10px;">Role</th>
-                                        <th style="padding:10px;">Points</th>
-                                        <th style="padding:10px;">CO₂ Goal</th>
-                                        <th style="padding:10px; text-align:center;">Administrative Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="dev-users-table-body">
-                                    <!-- Populated dynamically -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <!-- Factory Controls -->
-                    <div class="settings-card" style="margin-top:20px;">
-                        <h3>Administrative Actions</h3>
-                        <div style="display:flex; gap:12px; flex-wrap:wrap;">
-                            <button class="settings-save-btn" id="dev-inspect-raw-btn" style="background:var(--gray-600);"><i class="fa-solid fa-database"></i> Inspect Raw Database JSON</button>
-                            <button class="settings-save-btn" id="dev-reset-all-btn" style="background:var(--red-500);"><i class="fa-solid fa-trash-can"></i> Factory Reset LocalStorage</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </main>
     </div>
 
-    <!-- Reusable Dynamic Overlay Modals -->
     <div class="modal-overlay" id="app-modal" style="display: none;">
         <div class="modal-card">
             <button class="modal-close-btn" id="modal-close">&times;</button>
@@ -1113,12 +555,10 @@
                 <h3>Modal Title</h3>
             </div>
             <div class="modal-body" id="modal-body-area">
-                <!-- Injected dynamically -->
-            </div>
+                </div>
         </div>
     </div>
 
-    <!-- Scripts -->
     <script src="app.js"></script>
 </body>
 </html>
